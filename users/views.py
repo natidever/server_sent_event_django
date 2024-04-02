@@ -10,11 +10,13 @@ def user_creation(request):
         # Assuming the request contains user data
         user_data = request.POST
         new_user = User.objects.create(name=user_data['name'], email=user_data['email'])
-        # Add an event to the queue
-        event_queue.append("hello")
+        # Update the event queue with the current user count
+        user_count = User.objects.count()
+        event_queue.append(str(user_count))
         return HttpResponse('User created\n')
     else:
         return HttpResponse('Method not allowed\n', status=405)
+
     
     
     
